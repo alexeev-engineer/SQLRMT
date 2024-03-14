@@ -13,15 +13,15 @@
     </br>
 </p>
 
-> **SQLRMT** blazing fast software for connecting and managing your SQL databases in Python!
+> **SQLRMT** is blazing fast software for connecting and managing your SQL databases in Python!
 
-SQLRMT is asynchronous, uses network traffic protection mechanisms and is extensible
+SQLRMT is asynchronous, uses network traffic protection mechanisms and is extensible.
 
 > [!CAUTION]
 > **Currently, SQLRMT only supports Linux® distributions., SQLRMT currently only supports Linux distributions.** Other operating systems such as Windows, MacOS, BSD are not supported.
 
 > [!CAUTION]
-> At the moment, SQLRMT is under active development, many things may not work, and this version is not recommended for use (all at your own risk)
+> At the moment, SQLRMT is under active development, many things may not work, and this version is not recommended for use (all at your own risk).
 
 ## Requirements
 
@@ -35,7 +35,7 @@ To run the software you will have to install the necessary programs and dependen
  + Python libraries (listed in [requirements.txt](./requirements.txt))
 
 ## Installing
-To install SQLRMT, follow the steps
+To install SQLRMT, follow the steps:
 
 1. Clone this repo
 
@@ -77,6 +77,6 @@ timeout=3
 ## Copyright
 SQLRMT - blazing fast tool for work with remote databases.
 
-Copyright © 2024 Alexeev Bronislav. All rights reversed
+Copyright © 2024 Alexeev Bronislav. All rights reversed.
 
 The registered trademark Linux® is used pursuant to a sublicense from LMI, the exclusive licensee of Linus Torvalds, owner of the mark on a world-wide basis.
