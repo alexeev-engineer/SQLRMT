@@ -1,0 +1,44 @@
+[project]
+name = "SQLRMT"
+version = "0.1.0"
+
+authors = [
+	{ name="Alexeev Bronislav", email="bro.alexeev@inbox.ru" },
+]
+maintainers = [
+	{ name="Alexeev Bronislav", email="bro.alexeev@inbox.ru" },
+]
+
+description = "Software for working with remote SQL databases via the network."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+	"Programming Language :: Python :: 3",
+	"License :: OSI Approved :: GNU GPL v3",
+	"Operating System :: Linux",
+	"Development Status :: 1 - Unstable Alpha",
+]
+license = {file = "LICENSE"}
+dependencies = [
+	"rich",
+	'ruff',
+	'asyncio',
+	"aiohttp",
+	"configparser"
+]
+keywords = ["network", 'sockets', 'database', 'sql', 'sqlite3', 'remote', 'connections', 'client', 'server']
+
+[project.urls]
+Homepage = "https://github.com/alexeev-engineer/SQLRMT"
+Issues = "https://github.com/alexeev-engineer/SQLRMT/issues"
+Repository = "https://github.com/alexeev-engineer/SQLRMT"
+Changelog = "https://github.com/alexeev-engineer/SQLRMT/main/CHANGELOG.md"
+
+[tool.ruff]
+show-fixes = true
+lint.select = [
+	"E",
+	"F",
+	"UP",
+	"D"
+]

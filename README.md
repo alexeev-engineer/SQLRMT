@@ -18,7 +18,7 @@
 SQLRMT is asynchronous, uses network traffic protection mechanisms and is extensible
 
 > [!CAUTION]
-> **Currently, SQLRMT only supports Linux distributions., SQLRMT currently only supports Linux distributions.** Other operating systems such as Windows, MacOS, BSD are not supported.
+> **Currently, SQLRMT only supports Linux® distributions., SQLRMT currently only supports Linux distributions.** Other operating systems such as Windows, MacOS, BSD are not supported.
 
 > [!CAUTION]
 > At the moment, SQLRMT is under active development, many things may not work, and this version is not recommended for use (all at your own risk)
@@ -75,9 +75,8 @@ timeout=3
   + *timeout* - timeout for connecting to server
 
 ## Copyright
-SQLRMT - blazing fast tool for work with remote databases
-Copyright © 2024 Alexeev Bronislav
-All rights reversed
+SQLRMT - blazing fast tool for work with remote databases.
+
+Copyright © 2024 Alexeev Bronislav. All rights reversed
 
 The registered trademark Linux® is used pursuant to a sublicense from LMI, the exclusive licensee of Linus Torvalds, owner of the mark on a world-wide basis.
-
