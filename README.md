@@ -1,11 +1,17 @@
-![SQLRMT Logotype](./docs/sqlrmt.png)
-# SQLRMT
-Software for working with remote SQL databases via the network.
+<p align="center">
+	![SQLRMT Logotype](./docs/sqlrmt.png)
+
+	# SQLRMT
+	Software for working with remote SQL databases via the network.
+</p>
+
+> **SQLRMT** blazing fast software for connecting and managing your SQL databases in Python!
 
 <p align="center">
     <img src="https://img.shields.io/github/issues/zproger/bspwm-dotfiles?style=for-the-badge">
     </br>
     <img src="https://img.shields.io/github/languages/top/alexeev-engineer/SQLRMT?style=for-the-badge">
+    <img src="https://img.shields.io/github/languages/count/alexeev-engineer/SQLRMT?style=for-the-badge">
     <img src="https://img.shields.io/github/stars/alexeev-engineer/SQLRMT?style=for-the-badge">
     <img src="https://img.shields.io/github/issues/alexeev-engineer/SQLRMT?style=for-the-badge">
     <img src="https://img.shields.io/github/last-commit/alexeev-engineer/SQLRMT?style=for-the-badge">
@@ -13,8 +19,6 @@ Software for working with remote SQL databases via the network.
 </p>
 
 SQLRMT is asynchronous, uses network traffic protection mechanisms and is extensible
-
-> **SQLRMT** blazing fast software for connecting and managing your SQL databases in Python!
 
 > [!CAUTION]
 > **Currently, SQLRMT only supports Linux distributions., SQLRMT currently only supports Linux distributions.** Other operating systems such as Windows, MacOS, BSD are not supported.
