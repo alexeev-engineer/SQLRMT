@@ -1,12 +1,9 @@
 <p align="center">
 	<img src="docs/sqlrmt.png">
-
-	<h1 align='center'># SQLRMT</h1>
-	
-	<p align="center">Software for working with remote SQL databases via the network.</p>
 </p>
 
-> **SQLRMT** blazing fast software for connecting and managing your SQL databases in Python!
+<h1 align="center">SQLRMT</h1>
+Software for working with remote SQL databases via the network.
 
 <p align="center">
     <img src="https://img.shields.io/github/languages/top/alexeev-engineer/SQLRMT?style=for-the-badge">
@@ -16,6 +13,8 @@
     <img src="https://img.shields.io/github/last-commit/alexeev-engineer/SQLRMT?style=for-the-badge">
     </br>
 </p>
+
+> **SQLRMT** blazing fast software for connecting and managing your SQL databases in Python!
 
 SQLRMT is asynchronous, uses network traffic protection mechanisms and is extensible
 
