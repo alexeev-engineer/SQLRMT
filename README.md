@@ -2,9 +2,8 @@
 	<img src="docs/sqlrmt.png">
 </p>
 
-<h1 align="center">SQLRMT</h1>
-Software for working with remote SQL databases via the network.
-
+<p align="center">Software for working with remote SQL databases via the network.</p>
+<br>
 <p align="center">
     <img src="https://img.shields.io/github/languages/top/alexeev-engineer/SQLRMT?style=for-the-badge">
     <img src="https://img.shields.io/github/languages/count/alexeev-engineer/SQLRMT?style=for-the-badge">
