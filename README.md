@@ -18,7 +18,7 @@
 SQLRMT is asynchronous, uses network traffic protection mechanisms and is extensible.
 
 > [!CAUTION]
-> **Currently, SQLRMT only supports Linux® distributions., SQLRMT currently only supports Linux distributions.** Other operating systems such as Windows, MacOS, BSD are not supported.
+> **SQLRMT currently only supports Linux distributions.** Other operating systems such as Windows, MacOS, BSD are not supported.
 
 > [!CAUTION]
 > At the moment, SQLRMT is under active development, many things may not work, and this version is not recommended for use (all at your own risk).
@@ -35,7 +35,7 @@ To run the software you will have to install the necessary programs and dependen
  + Python libraries (listed in [requirements.txt](./requirements.txt))
 
 ## Installing
-To install SQLRMT, follow the steps:
+If you want to download a stable release, go to the [releases page](https://github.com/alexeev-engineer/SQLRMT/releases). If you want to install the latest git version, then follow these steps:
 
 1. Clone this repo
 
@@ -46,9 +46,12 @@ cd SQLRMT
 
 2. Create a working virtual environment and install dependencies
 
+> [!NOTE]
+> If your shell is fish, then instead of `source venv/bin/activate` use `source venv/bin/activate.fish`.
+
 ```bash
 python3 -m venv venv
-source -m venv/bin/activate
+source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
@@ -68,11 +71,19 @@ timeout=3
 ```
 
  + **Server** - server information
-  + *host* - IP address (hostname)
-  + *port* - port
+  - *host* - IP address (hostname)
+  - *port* - port
  + **Client** - client information
-  + *database* - path to connected database in server
-  + *timeout* - timeout for connecting to server
+  - *database* - path to connected database in server
+  - *timeout* - timeout for connecting to server
+
+## Functional
+Here you can see what SQLRMT can already do and what else is planned to be added in the future:
+
+ - [x] Asynchrony support
+ - [x] Secure and protected connection
+ - [ ] Extensions support
+ - [ ] SQL Query Validation
 
 ## Copyright
 SQLRMT - blazing fast tool for work with remote databases.
