@@ -1,3 +1,15 @@
+commit 7a3141015c430de7849d1bc22ff035823328b5f7
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Fri Mar 15 21:22:47 2024 +0700
+
+    docs: update docs
+
+commit f05f9f8d361933bb7c3f96e5f4453d3296925996
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Fri Mar 15 20:55:01 2024 +0700
+
+    docs/refactor: docs and main file update
+
 commit 5dd5032426c5bdeb2912c3ed94b91893aa2b7cd2
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Fri Mar 15 00:33:08 2024 +0700
