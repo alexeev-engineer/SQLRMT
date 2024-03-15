@@ -33,6 +33,7 @@ To run the software you will have to install the necessary programs and dependen
  + Python interpreter (>=3.10)
  + PIP package manager (>=22.0)
  + Python libraries (listed in [requirements.txt](./requirements.txt))
+ + openssl (>=3.0)
 
 ## Installing
 If you want to download a stable release, go to the [releases page](https://github.com/alexeev-engineer/SQLRMT/releases). If you want to install the latest git version, then follow these steps:
@@ -77,6 +78,46 @@ timeout=3
   - *database* - path to connected database in server
   - *timeout* - timeout for connecting to server
 
+## Launch and use
+Before you start using SQLRMT, you must first create RSA keys to encrypt traffic!
+
+> [!NOTE]
+> If you need a different period, then change the value of the `-days` flag to the desired number of days.
+
+To generate keys we will use openssl:
+
+```bash
+# client
+openssl req -new -newkey rsa:3072 -days 365 -nodes -x509 -keyout client.key -out client.crt
+
+# server
+openssl req -new -newkey rsa:3072 -days 365 -nodes -x509 -keyout server.key -out server.crt
+```
+
+You used openssl to generate server and client keys and certificates. Below are explanations of the flags:
+
+ + `-newkey` - creating a new key with RSA encryption and a length of 3072 bits
+ + `-days` - certificate expiration date
+ + `-nodes` - need to generate an unencrypted private key
+ + `-x509` - specifies the output certificate format
+ + `-keyout` - specifies the output file name
+
+The files client.key, client.crt, server.key, server.crt should have appeared in the directory
+
+All that remains is to start the SQLRMT server:
+
+```bash
+# client.crt, server.key, server.crt - these are the files we previously created
+python3 sqlrmt.py --server --server-key 'server.key' --server-cert 'server.crt' --client-cert 'client.cert'
+```
+
+And launch SQLRMT client:
+
+```bash
+# client.crt, client.key, server.crt - these are the files we previously created
+python3 sqlrmt.py --client --client-key 'client.key' --client-cert 'client.cert' --server-cert server.crt
+```
+
 ## Functional
 Here you can see what SQLRMT can already do and what else is planned to be added in the future:
 
@@ -84,6 +125,11 @@ Here you can see what SQLRMT can already do and what else is planned to be added
  - [x] Secure and protected connection
  - [ ] Extensions support
  - [ ] SQL Query Validation
+
+## Schemes of work
+A secure TLS connection is created between clients and the server with asynchronous traffic encryption using the Diffie-Hellman algorithm. The advantage of this algorithm is that even if an attacker obtains the private keys, he will only be able to read past messages. This is called _forward secrecy_.
+
+SQLRMT uses ssl, socket and asyncio to create an asynchronous secure connection.
 
 ## Copyright
 SQLRMT - blazing fast tool for work with remote databases.
