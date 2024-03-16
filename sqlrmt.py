@@ -7,6 +7,8 @@ SQLRMT - blazing fast tool for work with remote databases.
 Copyright © 2024 Alexeev Bronislav. All rights reversed
 """
 import argparse
+import signal
+import sys
 from functools import cache
 from pathlib import Path
 from time import monotonic
@@ -16,9 +18,15 @@ import asyncio
 
 from modules.server.server import Server
 from modules.client.client import Client
+from modules.logger import log
 
 __version__ = '0.1.0'
 __author__ = 'Alexeev Bronislav'
+
+
+def signal_handler(signal, frame):
+	log('Shutdown SQLRMT...', 'warn')
+	sys.exit(0)
 
 
 @cache
@@ -26,6 +34,7 @@ async def main():
 	"""Main function."""
 	print(f'SQLRMT {__version__} @ {__author__}')
 	print('Run with `--help` flag to view help\n')
+	signal.signal(signal.SIGINT, signal_handler)
 
 	parser = argparse.ArgumentParser(description='Software for working with remote SQL databases via the network')
 	parser.add_argument("-s", "--server", action="store_true", help='Start server')

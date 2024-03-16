@@ -126,6 +126,8 @@ python3 sqlrmt.py --client --config 'config.ini' --client-key 'client.key' --cli
 Here you can see what SQLRMT can already do and what else is planned to be added in the future:
 
  - [x] Asynchrony support
+ - [x] Multithread support
+ - [x] Logging
  - [x] Secure and protected connection
  - [ ] Extensions support
  - [ ] SQL Query Validation

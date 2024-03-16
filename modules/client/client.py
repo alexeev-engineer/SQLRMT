@@ -10,7 +10,8 @@ import socket
 import ssl
 import asyncio
 from functools import cache
-from rich import print
+
+from modules.logger import log
 
 
 class Client:
@@ -18,7 +19,7 @@ class Client:
 
 	Arguments:
 	---------
-	 + 
+	 + host: str
 
 	"""
 
@@ -30,7 +31,7 @@ class Client:
 		self.client_cert: str = client_cert
 		self.server_cert: str = server_cert
 
-		print('[blue]Create SSL context for client[/blue]')
+		log('Create SSL context for client', 'debug')
 		self.context = ssl.SSLContext(ssl.PROTOCOL_TLS, cafile=self.server_cert)
 		self.context.load_cert_chain(certfile=self.client_cert, keyfile=self.client_key)
 		self.context.load_verify_locations(cafile=self.server_cert)
@@ -38,44 +39,55 @@ class Client:
 		self.context.options |= ssl.OP_SINGLE_ECDH_USE
 		self.context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1 | ssl.OP_NO_TLSv1_2
 
-		print('[blue]Create client socket[/blue]')
+		log('Create client socket', 'debug')
 		self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
 		self.client.settimeout(self.timeout)
 
 	@cache
 	async def broadcast(self, socks):
 		while True:
-			message = input("SQLRMT > ")
+			print('SQLRMT > ', end='')
+			message = input('')
+			
+			try:
+				if message == 'help':
+					log(f'''Help for SQLRMT Client
 
-			if message == 'help':
-				print(f'''Help for SQLRMT Client
+		help - view help
+		disconnect/quit/exit - disconnect from server
 
-	help - view help
-	disconnect/exit/quit - disconnect from server
+	Currently connected to {self.host}:{self.port}''', 'none')
+				elif message in ['disconnect', 'quit', 'exit']:
+					log('Disconnect from server...', 'debug')
+					try:
+						socks.send(b'DISCONNECT')
+					except ssl.SSLError as ex:
+						log(f"An error occurred on the client side while sending a request to the server: {ex}", 'error')
 
-Currently connected to {self.host}:{self.port}''')
-			elif message in ['disconnect', 'exit', 'quit']:
-				socks.send(b'DISCONNECT')
-				exit()
-			elif len(message) > 0:
-				socks.send(message.encode())
-				receives = socks.recv(1024)
-				print(f'[blue]SERVER[/blue] -- [bold]{receives.decode()}[/bold]')
+					exit()
+				elif len(message) > 0:
+					socks.send(message.encode())
+					receives = socks.recv(1024)
+					log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
+			except ssl.SSLError as ex:
+				log(f"An error occurred on the client side while sending a request to the server: {ex}", 'error')
 
 	@cache
 	async def connect(self):
-		print(f'[blue]Connect to {self.host}:{self.port}[/blue]')
+		log(f'[blue]Connect to {self.host}:{self.port}[/blue]')
 
 		try:
 			self.client.connect((self.host, self.port))
 
 			with self.context.wrap_socket(self.client, server_side=False, server_hostname=self.host) as socks:
-				print(f'[cyan]TLS Version: {socks.version()}[/cyan]')
-				print('[cyan]Enter `help` for view help[/cyan]\n')
+				log(f'TLS Version: {socks.version()}', 'debug')
+				log('Enter `help` for view help\n', 'none')
 			
 				task = asyncio.create_task(self.broadcast(socks))
 				await task
 		except TimeoutError:
-			print('[red]The server is busy. Connect later[/red]')
+			log('The server is busy (timeout error). Connect later', 'red')
 			self.client.close()
 			exit()
+		except ConnectionRefusedError:
+			log('Check if you are connected to the network (if the server is not on local network) and if the server is turned on.', 'error')
