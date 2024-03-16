@@ -33,6 +33,7 @@ class Client:
 		self.server_cert: str = server_cert
 
 		log('Create SSL context for client', 'debug')
+		# create ssl context
 		self.context = ssl.SSLContext(ssl.PROTOCOL_TLS, cafile=self.server_cert)
 		self.context.load_cert_chain(certfile=self.client_cert, keyfile=self.client_key)
 		self.context.load_verify_locations(cafile=self.server_cert)
@@ -41,6 +42,7 @@ class Client:
 		self.context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1 | ssl.OP_NO_TLSv1_2
 
 		log('Create client socket', 'debug')
+		# create socket
 		self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
 		self.client.settimeout(self.timeout)
 
@@ -54,8 +56,8 @@ class Client:
 
 		"""
 		while True:
-			print('SQLRMT > ', end='')
-			message = input('')
+			# receive and send messages
+			message = input('SQLRMT query> ')
 			
 			try:
 				if message == 'help':
@@ -86,6 +88,7 @@ class Client:
 		"""Connect to server."""
 		log(f'[blue]Connect to {self.host}:{self.port}[/blue]')
 
+		# connect to server and start broadcast
 		try:
 			self.client.connect((self.host, self.port))
 

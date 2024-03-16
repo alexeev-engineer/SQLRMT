@@ -36,12 +36,14 @@ class Server:
 		self.server_cert: str = server_cert
 		self.server_db: str = server_db
 
+		# Create SSL context
 		log(f'Create SSL context for {host}:{port}', 'debug')
 		self.context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
 		self.context.load_cert_chain(certfile=self.server_cert, keyfile=self.server_key)
 		self.context.options |= ssl.OP_SINGLE_ECDH_USE
 		self.context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1 | ssl.OP_NO_TLSv1_2
 
+		# Create socket
 		log(f'Create server socket ({host}:{port})', 'debug')
 		self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
 		self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -57,9 +59,10 @@ class Server:
 		 + addr - client address
 
 		"""
-		dbman = DBManager(self.server_db)
+		dbman = DBManager(self.server_db)		# Database manager
 
 		while True:
+			# Receive and send message
 			try:
 				message = conn.recv(1024).decode()
 			except ssl.SSLError as ex:
@@ -68,6 +71,7 @@ class Server:
 				continue
 
 			if message == 'DISCONNECT':
+				# If client want to disconnect
 				log(f'{addr} disconnected', 'warn')
 				dbman.close()
 				conn.close()
@@ -75,15 +79,8 @@ class Server:
 			else:
 				log(f'{addr} says: [bold]{message}[/bold]', 'note')
 	
-				try:
-					response = dbman.execute(message)
-					conn.send(response.encode())
-				except ssl.SSLError as ex:
-					log(f'An error occurred while sending the package to the client: {ex}', 'error')
-					conn.send(f'The response was not received due to an error on the server: {ex}'.encode())
-				except ssl.SSLEOFError:
-					log(f'An error occurred while sending the package to the client: {ex}', 'error')
-					conn.send(f'The response was not received due to an error on the server: {ex}'.encode())
+				response = dbman.execute(message)
+				conn.send(response.encode())
 
 	@cache
 	async def listen(self, max_conns: int=1) -> None:
@@ -96,8 +93,10 @@ class Server:
 		"""
 		log('Listen connections...', 'debug')
 
+		# Listen connections
 		self.server.listen(max_conns)
 		
+		# Wrap socket and create thread for broadcast
 		with self.context.wrap_socket(self.server, server_side=True) as socks:
 			while True:
 				try:

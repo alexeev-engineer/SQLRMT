@@ -25,6 +25,8 @@ __author__ = 'Alexeev Bronislav'
 
 
 def signal_handler(signal, frame):
+	"""Keyboard interrupt signal handler."""
+	print()
 	log('Shutdown SQLRMT...', 'warn')
 	sys.exit(0)
 

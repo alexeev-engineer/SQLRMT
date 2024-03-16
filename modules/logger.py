@@ -43,6 +43,7 @@ def log(text: str, msg_type: str='info') -> str:
 
 	print(msg)
 
+	# write in logfile
 	with open('sqlrmt.log', 'a') as log:
 		log.write(logfile_message)
 

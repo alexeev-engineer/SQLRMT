@@ -33,6 +33,9 @@ def validate(query: str) -> bool:
 	try:
 		temp_db.execute(query)
 	except sqlite3.OperationalError as e:
+		if str(e).split(':')[0] == 'no such table':
+			return True
+
 		print(f'Query "{query}" failed validation ({e}).\nDo you really want to do it? This may damage your database!')
 		use_query = input('yes/no (default no) > ').lower()
 
@@ -51,6 +54,11 @@ class DBManager:
 	"""Database manager.
 
 	This class interacts with the database and works with SQL queries
+	
+	Arguments:
+	---------
+	 + database_path: str - path to database file
+
 	"""
 
 	def __init__(self, database_path: str):
@@ -60,12 +68,26 @@ class DBManager:
 
 	@cache
 	def change_db(self, new_database_path: str):
+		"""Change database.
+
+		Arguments:
+		---------
+		+ new_database_path: str - new path to database file
+
+		"""
 		self.database_path = new_database_path
 		self.connection = sqlite3.connect(self.new_database_path)
 		self.cursor = self.connection.cursor()
 
 	@cache
-	def execute(self, query: str):
+	def execute(self, query: str) -> str:
+		"""Execute SQL Query.
+
+		Arguments:
+		---------
+		+ query: str - sql query
+
+		"""
 		output = ''
 
 		try:
@@ -79,9 +101,10 @@ class DBManager:
 
 			self.connection.commit()
 		except Exception as ex:
-			return f'An error occurred while executing the request: {ex}. Request failed', 'error'
-		finally:
-			return output
+			output = f'An error occurred while executing the request: {ex}. Request failed'
+
+		return output
 
 	def close(self):
+		"""Close DB connection."""
 		self.connection.close()
