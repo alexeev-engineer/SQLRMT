@@ -1,3 +1,9 @@
+commit b114e1c357b7b25be68fab4d721270165e2b62f7
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sun Mar 17 00:13:24 2024 +0700
+
+    feat/refactor: fix bugs, code cleaned, remove unnecessary sql query valid, other fixes
+
 commit 0c3108effa0b3ee56d8e4d81adb0ec28be1d39d2
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Sat Mar 16 23:49:15 2024 +0700
