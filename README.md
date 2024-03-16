@@ -2,7 +2,7 @@
 	<img src="docs/sqlrmt.png">
 </p>
 
-<p align="center">Software for working with remote SQL databases via the network.</p>
+<p align="center">Software for secure working with remote SQL databases via the network.</p>
 <br>
 <p align="center">
     <img src="https://img.shields.io/github/languages/top/alexeev-engineer/SQLRMT?style=for-the-badge">
@@ -13,7 +13,7 @@
     </br>
 </p>
 
-> **SQLRMT** is blazing fast software for connecting and managing your SQL databases in Python!
+> **SQLRMT** is blazing fast software for encrypted connecting and managing your SQL databases in Python!
 
 SQLRMT is asynchronous, uses network traffic protection mechanisms and is extensible.
 
@@ -129,8 +129,11 @@ Here you can see what SQLRMT can already do and what else is planned to be added
  - [x] Multithread support
  - [x] Logging
  - [x] Secure and protected connection
+ - [x] SQL Query Validation
  - [ ] Extensions support
- - [ ] SQL Query Validation
+ - [ ] Advanced SQL Query Validation
+ - [ ] Create GUI
+ - [ ] Database encryption
 
 ## Schemes of work
 A secure TLS connection is created between clients and the server with asynchronous traffic encryption using the Diffie-Hellman algorithm. The advantage of this algorithm is that even if an attacker obtains the private keys, he will only be able to read past messages. This is called _forward secrecy_.

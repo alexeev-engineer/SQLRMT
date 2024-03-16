@@ -12,10 +12,11 @@ import asyncio
 from functools import cache
 
 from modules.logger import log
+from modules.server.database import validate
 
 
 class Client:
-	"""TLS-Client class
+	"""TLS-Client class.
 
 	Arguments:
 	---------
@@ -45,6 +46,13 @@ class Client:
 
 	@cache
 	async def broadcast(self, socks):
+		"""Broadcast function: receives and sends messages.
+
+		Arguments:
+		---------
+		+ socks - the socket ssl wrapper
+
+		"""
 		while True:
 			print('SQLRMT > ', end='')
 			message = input('')
@@ -66,14 +74,16 @@ class Client:
 
 					exit()
 				elif len(message) > 0:
-					socks.send(message.encode())
-					receives = socks.recv(1024)
-					log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
+					if validate(message):
+						socks.send(message.encode())
+						receives = socks.recv(1024)
+						log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
 			except ssl.SSLError as ex:
 				log(f"An error occurred on the client side while sending a request to the server: {ex}", 'error')
 
 	@cache
 	async def connect(self):
+		"""Connect to server."""
 		log(f'[blue]Connect to {self.host}:{self.port}[/blue]')
 
 		try:

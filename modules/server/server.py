@@ -12,10 +12,11 @@ from functools import cache
 import threading
 
 from modules.logger import log
+from modules.server.database import DBManager
 
 
 class Server:
-	"""TLS-Server class
+	"""TLS-Server class.
 
 	Arguments:
 	---------
@@ -27,12 +28,13 @@ class Server:
 
 	"""
 
-	def __init__(self, host: str, port: int, client_cert: str, server_key: str, server_cert: str):
+	def __init__(self, host: str, port: int, client_cert: str, server_key: str, server_cert: str, server_db: str):
 		self.host: str = host
 		self.port: int = port
 		self.client_cert: str = client_cert
 		self.server_key: str = server_key
 		self.server_cert: str = server_cert
+		self.server_db: str = server_db
 
 		log(f'Create SSL context for {host}:{port}', 'debug')
 		self.context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
@@ -47,7 +49,7 @@ class Server:
 
 	@cache
 	def broadcast(self, conn, addr: tuple) -> None:
-		"""Broadcast messages and manage connection
+		"""Broadcast messages and manage connection.
 
 		Arguments:
 		---------
@@ -55,6 +57,8 @@ class Server:
 		 + addr - client address
 
 		"""
+		dbman = DBManager(self.server_db)
+
 		while True:
 			try:
 				message = conn.recv(1024).decode()
@@ -65,13 +69,15 @@ class Server:
 
 			if message == 'DISCONNECT':
 				log(f'{addr} disconnected', 'warn')
+				dbman.close()
 				conn.close()
 				return
 			else:
 				log(f'{addr} says: [bold]{message}[/bold]', 'note')
 	
 				try:
-					conn.send(message.encode())
+					response = dbman.execute(message)
+					conn.send(response.encode())
 				except ssl.SSLError as ex:
 					log(f'An error occurred while sending the package to the client: {ex}', 'error')
 					conn.send(f'The response was not received due to an error on the server: {ex}'.encode())
@@ -81,7 +87,7 @@ class Server:
 
 	@cache
 	async def listen(self, max_conns: int=1) -> None:
-		"""Listen connections and create broadcast threads
+		"""Listen connections and create broadcast threads.
 
 		Arguments:
 		---------

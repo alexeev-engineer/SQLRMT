@@ -11,6 +11,18 @@ from rich import print
 
 
 def log(text: str, msg_type: str='info') -> str:
+	"""Print beautiful debug message and save it to logfile.
+
+	Arguments:
+	---------
+	 + text: str - message text (support rich formating)
+	 + msg_type: str='info' - type of message (info, warn error, note, debug or unknown)
+
+	Return:
+	------
+	+ str - message
+
+	"""
 	cleaned_text = text.replace("[bold]", '').replace("[/bold]", '')
 	logfile_message = f'[{datetime.now()}] {msg_type} -- {cleaned_text}\n'
 

@@ -72,7 +72,7 @@ async def main():
 
 		if args.server and args.client_cert and args.server_key and args.server_cert:
 			print('[green]Starting the server...[/green]')
-			server = Server(server_host, int(server_port), args.client_cert, args.server_key, args.server_cert)
+			server = Server(server_host, int(server_port), args.client_cert, args.server_key, args.server_cert, server_db)
 			
 			start = monotonic()
 			task = asyncio.create_task(server.listen())
