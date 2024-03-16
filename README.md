@@ -65,9 +65,9 @@ Before starting, you need to create or modify a configuration file `sqlrmt.ini`.
 [Server]
 host=127.0.0.1
 port=8000
+database=database.sqlite
 
 [Client]
-database=database.sqlite
 timeout=3
 ```
 
@@ -75,7 +75,6 @@ timeout=3
   - *host* - IP address (hostname)
   - *port* - port
  + **Client** - client information
-  - *database* - path to connected database in server
   - *timeout* - timeout for connecting to server
 
 ## Launch and use
@@ -86,11 +85,14 @@ Before you start using SQLRMT, you must first create RSA keys to encrypt traffic
 
 To generate keys we will use openssl:
 
+> [!CAUTION]
+> Make sure to fill out the Common Name field!
+
 ```bash
-# client
+# client: Make sure to fill out the Common Name field!
 openssl req -new -newkey rsa:3072 -days 365 -nodes -x509 -keyout client.key -out client.crt
 
-# server
+# server: Make sure to fill out the Common Name field!
 openssl req -new -newkey rsa:3072 -days 365 -nodes -x509 -keyout server.key -out server.crt
 ```
 
@@ -108,14 +110,16 @@ All that remains is to start the SQLRMT server:
 
 ```bash
 # client.crt, server.key, server.crt - these are the files we previously created
-python3 sqlrmt.py --server --server-key 'server.key' --server-cert 'server.crt' --client-cert 'client.cert'
+python3 sqlrmt.py --server --config 'config.ini' --server-key 'server.key' --server-cert 'server.crt' --client-cert 'client.cert'
+# replace host and port to your
 ```
 
 And launch SQLRMT client:
 
 ```bash
 # client.crt, client.key, server.crt - these are the files we previously created
-python3 sqlrmt.py --client --client-key 'client.key' --client-cert 'client.cert' --server-cert server.crt
+python3 sqlrmt.py --client --config 'config.ini' --client-key 'client.key' --client-cert 'client.cert' --server-cert server.crt
+# replace host and port to your
 ```
 
 ## Functional
