@@ -53,6 +53,7 @@ class Server:
 		---------
 		 + conn - connected socket (client)
 		 + addr - client address
+
 		"""
 		while True:
 			try:
@@ -84,7 +85,9 @@ class Server:
 
 		Arguments:
 		---------
-		 + max_conns: int=1 - max connections number for listening"""
+		+ max_conns: int=1 - max connections number for listening
+
+		"""
 		log('Listen connections...', 'debug')
 
 		self.server.listen(max_conns)
