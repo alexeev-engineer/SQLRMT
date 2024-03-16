@@ -1,3 +1,21 @@
+commit dad7df3dbb239bb36230c43630729c59aa118b3b
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 14:09:38 2024 +0700
+
+    feat/docs: add base server and client, add arg parser, update docs
+
+commit 4613161e915f6d0af0c477964d8c0206566e4419
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 14:08:04 2024 +0700
+
+    feat/docs: add base server and client, add arg parser, update docs
+
+commit 3ce06fc755c55e87af8481f34b599f76ba50ccd2
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Fri Mar 15 21:23:05 2024 +0700
+
+    update changelog
+
 commit 7a3141015c430de7849d1bc22ff035823328b5f7
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Fri Mar 15 21:22:47 2024 +0700
