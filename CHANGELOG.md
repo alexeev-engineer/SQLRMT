@@ -1,3 +1,15 @@
+commit 0c3108effa0b3ee56d8e4d81adb0ec28be1d39d2
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 23:49:15 2024 +0700
+
+    feat/docs/style: update docs and code comments, update database and server module, add readline module (updated requirements) and update main file
+
+commit c1925a3727ec3c10c1d291b195fed82caf10a82a
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 21:37:20 2024 +0700
+
+    update changelog
+
 commit c007fd247f2d191db7a6f9b003b51fea21c1139e
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Sat Mar 16 21:37:00 2024 +0700

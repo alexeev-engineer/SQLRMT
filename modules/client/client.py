@@ -9,10 +9,10 @@ Copyright © 2024 Alexeev Bronislav. All rights reversed
 import socket
 import ssl
 import asyncio
+import readline
 from functools import cache
 
 from modules.logger import log
-from modules.server.database import validate
 
 
 class Client:
@@ -76,10 +76,9 @@ class Client:
 
 					exit()
 				elif len(message) > 0:
-					if validate(message):
-						socks.send(message.encode())
-						receives = socks.recv(1024)
-						log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
+					socks.send(message.encode())
+					receives = socks.recv(1024)
+					log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
 			except ssl.SSLError as ex:
 				log(f"An error occurred on the client side while sending a request to the server: {ex}", 'error')
 

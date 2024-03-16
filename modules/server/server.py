@@ -9,6 +9,8 @@ Copyright © 2024 Alexeev Bronislav. All rights reversed
 import socket
 import ssl
 from functools import cache
+from pathlib import Path
+import os
 import threading
 
 from modules.logger import log
@@ -78,9 +80,16 @@ class Server:
 				return
 			else:
 				log(f'{addr} says: [bold]{message}[/bold]', 'note')
-	
-				response = dbman.execute(message)
-				conn.send(response.encode())
+			
+				try:
+					response = dbman.execute(message)
+					conn.send(response.encode())
+				except ssl.SSLEOFError as ex:
+					log(f'SSL EOF ERROR occurred while sending a response to the client: {ex}', 'red')
+					break
+				except ssl.SSLError as ex:
+					log(f'SSL ERROR occurred while sending a response to the client: {ex}', 'red')
+					break
 
 	@cache
 	async def listen(self, max_conns: int=1) -> None:

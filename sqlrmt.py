@@ -26,7 +26,6 @@ __author__ = 'Alexeev Bronislav'
 
 def signal_handler(signal, frame):
 	"""Keyboard interrupt signal handler."""
-	print()
 	log('Shutdown SQLRMT...', 'warn')
 	sys.exit(0)
 
@@ -54,49 +53,58 @@ async def main():
 	args = parser.parse_args()
 
 	config_path = Path(args.config)
+	systemwide_config_path = Path('/etc/sqlrmt.ini')
+	local_config_path = Path('sqlrmt.ini')
 
 	if config_path.exists():
 		config = ConfigParser()
 		config.read(args.config)
-		server_host = config.get('Server', 'host')
-		server_port = config.get('Server', 'port')
-		server_db = config.get('Server', 'database')
-		client_timeout = config.get('Client', 'timeout')
-
-		if args.host:
-			server_host = args.host
-		elif args.port:
-			server_port = args.port
-		elif args.timeout:
-			client_timeout = args.timeout
-		elif args.database:
-			server_db = args.database
-
-		if args.server and args.client_cert and args.server_key and args.server_cert:
-			print('[green]Starting the server...[/green]')
-			server = Server(server_host, int(server_port), args.client_cert, args.server_key, args.server_cert, server_db)
-			
-			start = monotonic()
-			task = asyncio.create_task(server.listen())
-			await task
-			end = monotonic()
-
-			total = round(end - start, 3)
-			print(f'\nConnection uptime: {total} sec.')
-		elif args.client and args.client_key and args.client_cert and args.server_cert:
-			print('[green]Starting the client...[/green]')
-			client = Client(server_host, int(server_port), int(client_timeout), args.client_key, args.client_cert, args.server_cert)
-
-			start = monotonic()
-			task = asyncio.create_task(client.connect())
-			await task
-			end = monotonic()
-
-			total = round(end - start, 3)
-			print(f'\nConnection uptime: {total} sec.')
+	elif systemwide_config_path.exists():
+		config = ConfigParser()
+		config.read(systemwide_config_path)
+	elif local_config_path.exists():
+		config = ConfigParser()
+		config.read(local_config_path)
 	else:
 		print(f'[red]Error: config file "{args.config}" don\'t exists[/red]')
+		signal_handler(None, None)
 
+	server_host = config.get('Server', 'host')
+	server_port = config.get('Server', 'port')
+	server_db = config.get('Server', 'database')
+	client_timeout = config.get('Client', 'timeout')
+
+	if args.host:
+		server_host = args.host
+	elif args.port:
+		server_port = args.port
+	elif args.timeout:
+		client_timeout = args.timeout
+	elif args.database:
+		server_db = args.database
+
+	if args.server and args.client_cert and args.server_key and args.server_cert:
+		print('[green]Starting the server...[/green]')
+		server = Server(server_host, int(server_port), args.client_cert, args.server_key, args.server_cert, server_db)
+		
+		start = monotonic()
+		task = asyncio.create_task(server.listen())
+		await task
+		end = monotonic()
+
+		total = round(end - start, 3)
+		print(f'\nConnection uptime: {total} sec.')
+	elif args.client and args.client_key and args.client_cert and args.server_cert:
+		print('[green]Starting the client...[/green]')
+		client = Client(server_host, int(server_port), int(client_timeout), args.client_key, args.client_cert, args.server_cert)
+
+		start = monotonic()
+		task = asyncio.create_task(client.connect())
+		await task
+		end = monotonic()
+
+		total = round(end - start, 3)
+		print(f'\nConnection uptime: {total} sec.')
 
 if __name__ == '__main__':
 	"""Run tasks"""
