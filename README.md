@@ -23,6 +23,15 @@ SQLRMT is asynchronous, uses network traffic protection mechanisms and is extens
 > [!CAUTION]
 > At the moment, SQLRMT is under active development, many things may not work, and this version is not recommended for use (all at your own risk).
 
+## Contact and support
+If you have questions about using SQLRMT, then create an [issue](https://github.com/alexeev-engineer/SQLRMT/issues/new) in the repository or write to me at bro.alexeev@inbox.ru.
+
+You can also write to me on Telegram: [@alexeev_dev](https://t.me/alexeev_dev)
+
+SQLRMT is an Open Source project, and it only survives due to your feedback and support!
+
+Project releases are available at [this link](https://github.com/alexeev-engineer/SQLRMT/releases).
+
 ## Requirements
 
 > [!NOTE]
@@ -111,7 +120,6 @@ All that remains is to start the SQLRMT server:
 ```bash
 # client.crt, server.key, server.crt - these are the files we previously created
 python3 sqlrmt.py --server --config 'config.ini' --server-key 'server.key' --server-cert 'server.crt' --client-cert 'client.cert'
-# replace host and port to your
 ```
 
 And launch SQLRMT client:
@@ -119,7 +127,6 @@ And launch SQLRMT client:
 ```bash
 # client.crt, client.key, server.crt - these are the files we previously created
 python3 sqlrmt.py --client --config 'config.ini' --client-key 'client.key' --client-cert 'client.cert' --server-cert server.crt
-# replace host and port to your
 ```
 
 ## Functional
@@ -131,9 +138,13 @@ Here you can see what SQLRMT can already do and what else is planned to be added
  - [x] Secure and protected connection
  - [x] SQL Query Validation
  - [ ] Extensions support
- - [ ] Advanced SQL Query Validation
  - [ ] Create GUI
  - [ ] Database encryption
+ - [ ] Support MySQL
+ - [ ] Create Web Interface
+ - [ ] Improve logging
+ - [ ] Improve configuration ini file
+ - [ ] Create SQLRMT installer
 
 ## Schemes of work
 A secure TLS connection is created between clients and the server with asynchronous traffic encryption using the Diffie-Hellman algorithm. The advantage of this algorithm is that even if an attacker obtains the private keys, he will only be able to read past messages. This is called _forward secrecy_.
