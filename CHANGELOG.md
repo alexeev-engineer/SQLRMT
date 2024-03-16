@@ -1,3 +1,15 @@
+commit 9962044d6b92c5f166e797265dd9ebc564dc6d9a
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 16:39:37 2024 +0700
+
+    feat/docs: added logging, added error handlers, improved messages, fixed bugs, update docs
+
+commit 3fa3bad02f7d0ecdc574520590b25cafddda346a
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 14:17:49 2024 +0700
+
+    update changelog
+
 commit bac22796ad19fed2fcad0facfc807f6f2d19e9aa
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Sat Mar 16 14:17:08 2024 +0700
