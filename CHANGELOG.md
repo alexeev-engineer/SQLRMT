@@ -1,3 +1,15 @@
+commit bac22796ad19fed2fcad0facfc807f6f2d19e9aa
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 14:17:08 2024 +0700
+
+    style/fix: fix unused timeout arg, fix stylistic pep8 errors
+
+commit 4a88db5f550b9cf11f1df3c3e5addb36ec28c406
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 14:14:29 2024 +0700
+
+    update changelog
+
 commit dad7df3dbb239bb36230c43630729c59aa118b3b
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Sat Mar 16 14:09:38 2024 +0700
