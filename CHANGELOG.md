@@ -1,3 +1,21 @@
+commit c007fd247f2d191db7a6f9b003b51fea21c1139e
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 21:37:00 2024 +0700
+
+    feat/style/docs: update docs, add SQL query validation, add database manager, fix bugs and edit code style pep8
+
+commit b3799ce321abc50a5e0419dc71ae187730db6d1e
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 21:36:48 2024 +0700
+
+    feat/style/docs: update docs, add SQL query validation, add database manager, fix bugs and edit code style pep8
+
+commit fe8e0942ff5aabd3424f90e453221b6b79b9a922
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sat Mar 16 16:43:06 2024 +0700
+
+    update changelog
+
 commit 8442fde8baaa6535f81eec6956ef1737a4aadc0a
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Sat Mar 16 16:42:51 2024 +0700
