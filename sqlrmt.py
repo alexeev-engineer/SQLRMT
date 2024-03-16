@@ -74,7 +74,7 @@ async def main():
 			print(f'\nConnection uptime: {total} sec.')
 		elif args.client and args.client_key and args.client_cert and args.server_cert:
 			print('[green]Starting the client...[/green]')
-			client = Client(server_host, int(server_port), 3, args.client_key, args.client_cert, args.server_cert)
+			client = Client(server_host, int(server_port), int(client_timeout), args.client_key, args.client_cert, args.server_cert)
 
 			start = monotonic()
 			task = asyncio.create_task(client.connect())

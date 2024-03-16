@@ -18,12 +18,15 @@ class Server:
 	"""TLS-Server class
 
 	Arguments:
+	---------
 	 + host: str - hostname
 	 + port: int - port
 	 + client_cert: str - client certification
 	 + server_key: str - server secure key
 	 + server_cert: str - server certification
+
 	"""
+
 	def __init__(self, host: str, port: int, client_cert: str, server_key: str, server_cert: str):
 		self.host: str = host
 		self.port: int = port
@@ -57,7 +60,7 @@ class Server:
 
 	@cache
 	async def listen(self, max_conns: int=1) -> None:
-		print(f'[blue]Listen connections...[/blue]')
+		print('[blue]Listen connections...[/blue]')
 	
 		self.server.listen(2)
 		

@@ -6,7 +6,6 @@ SQLRMT - blazing fast tool for work with remote databases.
 
 Copyright © 2024 Alexeev Bronislav. All rights reversed
 """
-from datetime import datetime
 import socket
 import ssl
 import asyncio
@@ -18,8 +17,11 @@ class Client:
 	"""TLS-Client class
 
 	Arguments:
+	---------
 	 + 
+
 	"""
+
 	def __init__(self, host: str, port: int, timeout: int, client_key: str, client_cert: str, server_cert: str):
 		self.host: str = host
 		self.port: int = port
@@ -28,7 +30,7 @@ class Client:
 		self.client_cert: str = client_cert
 		self.server_cert: str = server_cert
 
-		print(f'[blue]Create SSL context for client[/blue]')
+		print('[blue]Create SSL context for client[/blue]')
 		self.context = ssl.SSLContext(ssl.PROTOCOL_TLS, cafile=self.server_cert)
 		self.context.load_cert_chain(certfile=self.client_cert, keyfile=self.client_key)
 		self.context.load_verify_locations(cafile=self.server_cert)
@@ -36,7 +38,7 @@ class Client:
 		self.context.options |= ssl.OP_SINGLE_ECDH_USE
 		self.context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1 | ssl.OP_NO_TLSv1_2
 
-		print(f'[blue]Create client socket[/blue]')
+		print('[blue]Create client socket[/blue]')
 		self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
 		self.client.settimeout(self.timeout)
 
@@ -53,7 +55,7 @@ class Client:
 
 Currently connected to {self.host}:{self.port}''')
 			elif message in ['disconnect', 'exit', 'quit']:
-				socks.send('DISCONNECT'.encode())
+				socks.send(b'DISCONNECT')
 				exit()
 			elif len(message) > 0:
 				socks.send(message.encode())
@@ -69,7 +71,7 @@ Currently connected to {self.host}:{self.port}''')
 
 			with self.context.wrap_socket(self.client, server_side=False, server_hostname=self.host) as socks:
 				print(f'[cyan]TLS Version: {socks.version()}[/cyan]')
-				print(f'[cyan]Enter `help` for view help[/cyan]\n')
+				print('[cyan]Enter `help` for view help[/cyan]\n')
 			
 				task = asyncio.create_task(self.broadcast(socks))
 				await task
