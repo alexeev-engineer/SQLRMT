@@ -104,6 +104,9 @@ class Server:
 				self.dbman.change_db(database)
 				conn.send(f'Successfully connected to the database {database}'.encode())
 				log(f'Client {addr} connected to database {database}', 'info')
+			elif message.split(' ')[0].lower() == 'pragma' and message.split(' ')[1].lower() == 'key':
+				conn.send(f'This command is dangerous for the server and database and has been blocked., This command poses a risk to the server and database and has been blocked.'.encode())
+				log(f'A dangerous command was detected: {message}. The request was blocked.', 'warn')
 			elif message == 'INFO':
 				db_info = self.dbman.info_about_database()
 				conn.send(f'Client: {addr}; {db_info}'.encode())
