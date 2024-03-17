@@ -19,7 +19,7 @@ from modules.server.server import Server
 from modules.client.client import Client
 from modules.logger import log
 
-__version__ = '0.1.0'
+__version__ = '1.0.0'
 __author__ = 'Alexeev Bronislav'
 
 
