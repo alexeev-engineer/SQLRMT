@@ -1,3 +1,9 @@
+commit 22a5a633c742fd5abe3fde76258ffb8ba83632ca
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sun Mar 17 23:05:19 2024 +0700
+
+    feat/docs/style: add database encryption, update docs, fix bugs, update code style
+
 commit f9f5b6da2ed2941728f5617d28c3bd8701fd166b
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Sun Mar 17 22:19:49 2024 +0700
