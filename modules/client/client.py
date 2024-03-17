@@ -6,10 +6,10 @@ SQLRMT - blazing fast tool for work with remote databases.
 
 Copyright © 2024 Alexeev Bronislav. All rights reversed
 """
+import readline # !!! DON'T DELETE THIS IMPORT !!!
 import socket
 import ssl
 import asyncio
-import readline
 from functools import cache
 
 from modules.logger import log
@@ -55,6 +55,26 @@ class Client:
 		+ socks - the socket ssl wrapper
 
 		"""
+		attempts = 0
+		while True:
+			if attempts > 2:
+				log('Verification passed. Successful connection to the database. Exit...', 'red')
+				socks.send(b'DISCONNECT')
+				exit()
+
+			passphrase = input('Enter the password to connect to the database: ')
+
+			if len(passphrase) > 0:
+				attempts += 1
+				socks.send(passphrase.encode())
+				resp = socks.recv(1024).decode()
+
+				if resp == 'SUCCESS':
+					log('Verification passed. Successful connection to the database, welcome!', 'info')
+					break
+				else:
+					log('Verification failed. Please try another passphrase.', 'red')
+
 		while True:
 			# receive and send messages
 			try:
@@ -89,7 +109,7 @@ class Client:
 						receives = socks.recv(1024)
 						log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
 				elif message == 'info':
-					socks.send('INFO'.encode())
+					socks.send(b'INFO')
 					receives = socks.recv(1024)
 					log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
 				elif len(message) > 0:

@@ -9,8 +9,6 @@ Copyright © 2024 Alexeev Bronislav. All rights reversed
 import socket
 import ssl
 from functools import cache
-from pathlib import Path
-import os
 import threading
 
 from modules.logger import log
@@ -30,13 +28,20 @@ class Server:
 
 	"""
 
-	def __init__(self, host: str, port: int, client_cert: str, server_key: str, server_cert: str, server_db: str):
+	def __init__(self, host: str, port: int, client_cert: str, server_key: str, server_cert: str, server_db: str, passphrase: str):
 		self.host: str = host
 		self.port: int = port
 		self.client_cert: str = client_cert
 		self.server_key: str = server_key
 		self.server_cert: str = server_cert
 		self.server_db: str = server_db
+		self.passphrase: str = passphrase
+		dbman = DBManager(self.server_db)
+		result = dbman.set_pass(self.passphrase)
+
+		if result[0] is False:
+			log(result[1])
+			exit()
 
 		# Create SSL context
 		log(f'Create SSL context for {host}:{port}', 'debug')
@@ -61,7 +66,23 @@ class Server:
 		 + addr - client address
 
 		"""
-		dbman = DBManager(self.server_db)		# Database manager
+		self.dbman = DBManager(self.server_db)
+		
+		while True:
+			message = conn.recv(1024).decode()
+
+			if message == 'DISCONNECT':
+				conn.close()
+				log(f'Client {addr} tried to connect to the server with an incorrect password and reached its limit of attempts', 'warn')
+				return
+
+			if message == self.passphrase:
+				conn.send(b'SUCCESS')
+				log('Client successfully connected to the server', 'info')
+				break
+			else:
+				log(f'Client {addr} tried to connect to the server with an incorrect password: {message}', 'warn')
+				conn.send(b'FAILED')
 
 		while True:
 			# Receive and send message
@@ -75,23 +96,23 @@ class Server:
 			if message == 'DISCONNECT':
 				# If client want to disconnect
 				log(f'{addr} disconnected', 'warn')
-				dbman.close()
+				self.dbman.close()
 				conn.close()
 				return
 			elif message.split(' ')[0] == 'RECONNECT':
 				database = message.split(' ')[1]
-				dbman.change_db(database)
+				self.dbman.change_db(database)
 				conn.send(f'Successfully connected to the database {database}'.encode())
 				log(f'Client {addr} connected to database {database}', 'info')
 			elif message == 'INFO':
-				db_info = dbman.info_about_database()
+				db_info = self.dbman.info_about_database()
 				conn.send(f'Client: {addr}; {db_info}'.encode())
 				log(f'Client {addr} get info {db_info}', 'debug')
 			else:
 				log(f'{addr} says: [bold]{message}[/bold]', 'note')
 			
 				try:
-					response = dbman.execute(message)
+					response = self.dbman.execute(message)
 					conn.send(response.encode())
 				except ssl.SSLEOFError as ex:
 					log(f'SSL EOF ERROR occurred while sending a response to the client: {ex}', 'red')

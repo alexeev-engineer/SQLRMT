@@ -7,7 +7,6 @@ SQLRMT - blazing fast tool for work with remote databases.
 Copyright © 2024 Alexeev Bronislav. All rights reversed
 """
 import argparse
-import signal
 import sys
 from functools import cache
 from pathlib import Path
@@ -44,6 +43,7 @@ async def main():
 	parser.add_argument('-p', '--port', type=str, help='Server port')
 	parser.add_argument('-d', '--database', type=str, help='Database file name')
 	parser.add_argument('-t', '--timeout', type=str, help='Client timeout')
+	parser.add_argument('--passphrase', type=str, help='Passphrase for database')
 	parser.add_argument("--server-cert", type=str, help='Server certificate file')
 	parser.add_argument("--client-cert", type=str, help='Client certificate file')
 	parser.add_argument("--server-key", type=str, help='Server secure key file')
@@ -73,6 +73,7 @@ async def main():
 	server_port = config.get('Server', 'port')
 	server_db = config.get('Server', 'database')
 	client_timeout = config.get('Client', 'timeout')
+	db_passphrase = config.get('Server', 'passphrase')
 
 	if args.host:
 		server_host = args.host
@@ -82,10 +83,12 @@ async def main():
 		client_timeout = args.timeout
 	elif args.database:
 		server_db = args.database
+	elif args.passphrase:
+		db_passphrase = passphrase
 
 	if args.server and args.client_cert and args.server_key and args.server_cert:
 		print('[green]Starting the server...[/green]')
-		server = Server(server_host, int(server_port), args.client_cert, args.server_key, args.server_cert, server_db)
+		server = Server(server_host, int(server_port), args.client_cert, args.server_key, args.server_cert, server_db, db_passphrase)
 		
 		start = monotonic()
 		task = asyncio.create_task(server.listen())

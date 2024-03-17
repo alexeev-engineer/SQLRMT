@@ -6,7 +6,7 @@ SQLRMT - blazing fast tool for work with remote databases.
 
 Copyright © 2024 Alexeev Bronislav. All rights reversed
 """
-import sqlite3
+from pysqlcipher3 import dbapi2 as sqlite3
 
 
 class DBManager:
@@ -29,6 +29,14 @@ class DBManager:
 			'failed': 0
 		}
 		self.total_queries_count = 0
+
+	def set_pass(self, passphrase) -> list:
+		try:
+			self.connection.execute(f"PRAGMA key = '{passphrase}'")
+		except Exception as e:
+			return [False, f'Password verification failed when connecting to the database ({e})']
+		else:
+			return [True, 'Verification passed. Successful connection to the database.']
 
 	def change_db(self, new_database_path: str):
 		"""Change database.

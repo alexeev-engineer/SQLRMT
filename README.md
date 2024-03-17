@@ -72,9 +72,10 @@ Before starting, you need to create or modify a configuration file `sqlrmt.ini`.
 
 ```ini
 [Server]
-host=127.0.0.1
 port=8000
+host=0.0.0.0
 database=database.sqlite
+passphrase=qwerty
 
 [Client]
 timeout=3
@@ -83,6 +84,7 @@ timeout=3
  + **Server** - server information
   - *host* - IP address (hostname)
   - *port* - port
+  - *passphrase* - passphrase to database
  + **Client** - client information
   - *timeout* - timeout for connecting to server
 
@@ -137,9 +139,9 @@ Here you can see what SQLRMT can already do and what else is planned to be added
  - [x] Logging
  - [x] Secure and protected connection
  - [x] SQL Query Validation
+ - [x] Database encryption
  - [ ] Extensions support
  - [ ] Create GUI
- - [ ] Database encryption
  - [ ] Support MySQL
  - [ ] Create Web Interface
  - [ ] Improve logging
