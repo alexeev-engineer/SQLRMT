@@ -1,3 +1,9 @@
+commit 63bae27a585058d535d64d10531358f1eddd154b
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sun Mar 17 22:19:18 2024 +0700
+
+    feat: add info and change db command for client, update client shell, update changelog
+
 commit 998ed77945de496d514da437a7813526f08a0f91
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Sun Mar 17 00:28:46 2024 +0700
