@@ -1,3 +1,15 @@
+commit cbf7ff27cf5f5e0417136ff7e73429c53338261c
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sun Mar 17 23:12:16 2024 +0700
+
+    fix/feat: improved database security, added blocking of dangerous queries
+
+commit 1288505fb3602025dc18e9f0fd4667f9eca4f7e6
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sun Mar 17 23:05:49 2024 +0700
+
+    update changelog
+
 commit 22a5a633c742fd5abe3fde76258ffb8ba83632ca
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Sun Mar 17 23:05:19 2024 +0700
