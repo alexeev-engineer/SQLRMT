@@ -57,7 +57,11 @@ class Client:
 		"""
 		while True:
 			# receive and send messages
-			message = input('SQLRMT query> ')
+			try:
+				message = input('SQLRMT query> ')
+			except KeyboardInterrupt:
+				print()
+				continue
 			
 			try:
 				if message == 'help':
@@ -65,6 +69,8 @@ class Client:
 
 		help - view help
 		disconnect/quit/exit - disconnect from server
+		connect <database> - connect to new database
+		info - info about connection
 
 	Currently connected to {self.host}:{self.port}''', 'none')
 				elif message in ['disconnect', 'quit', 'exit']:
@@ -75,6 +81,17 @@ class Client:
 						log(f"An error occurred on the client side while sending a request to the server: {ex}", 'error')
 
 					exit()
+				elif message.split(' ')[0] == 'connect':
+					database = message.split(' ')[1]
+
+					if database:
+						socks.send(f'RECONNECT {database}'.encode())
+						receives = socks.recv(1024)
+						log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
+				elif message == 'info':
+					socks.send('INFO'.encode())
+					receives = socks.recv(1024)
+					log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
 				elif len(message) > 0:
 					socks.send(message.encode())
 					receives = socks.recv(1024)

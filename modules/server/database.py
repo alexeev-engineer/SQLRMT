@@ -24,6 +24,11 @@ class DBManager:
 		self.database_path = database_path
 		self.connection = sqlite3.connect(self.database_path)
 		self.cursor = self.connection.cursor()
+		self.queries_count = {
+			'success': 0,
+			'failed': 0
+		}
+		self.total_queries_count = 0
 
 	def change_db(self, new_database_path: str):
 		"""Change database.
@@ -34,8 +39,11 @@ class DBManager:
 
 		"""
 		self.database_path = new_database_path
-		self.connection = sqlite3.connect(self.new_database_path)
+		self.connection = sqlite3.connect(self.database_path)
 		self.cursor = self.connection.cursor()
+
+	def info_about_database(self) -> str:
+		return f'Database: {self.database_path}. Total queries sended: {self.total_queries_count}; success - {self.queries_count["success"]}; failed - {self.queries_count["failed"]}'
 
 	def execute(self, query: str) -> str:
 		"""Execute SQL Query.
@@ -46,6 +54,7 @@ class DBManager:
 
 		"""
 		output = ''
+		self.total_queries_count += 1
 
 		try:
 			self.cursor.execute(query)
@@ -59,6 +68,9 @@ class DBManager:
 			self.connection.commit()
 		except Exception as ex:
 			output = f'An error occurred while executing the request: {ex}'
+			self.queries_count['failed'] += 1
+		else:
+			self.queries_count['success'] += 1
 
 		return output
 

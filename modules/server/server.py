@@ -78,6 +78,15 @@ class Server:
 				dbman.close()
 				conn.close()
 				return
+			elif message.split(' ')[0] == 'RECONNECT':
+				database = message.split(' ')[1]
+				dbman.change_db(database)
+				conn.send(f'Successfully connected to the database {database}'.encode())
+				log(f'Client {addr} connected to database {database}', 'info')
+			elif message == 'INFO':
+				db_info = dbman.info_about_database()
+				conn.send(f'Client: {addr}; {db_info}'.encode())
+				log(f'Client {addr} get info {db_info}', 'debug')
 			else:
 				log(f'{addr} says: [bold]{message}[/bold]', 'note')
 			

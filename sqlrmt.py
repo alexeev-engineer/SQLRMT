@@ -35,7 +35,7 @@ async def main():
 	"""Main function."""
 	print(f'SQLRMT {__version__} @ {__author__}')
 	print('Run with `--help` flag to view help\n')
-	signal.signal(signal.SIGINT, signal_handler)
+	# signal.signal(signal.SIGINT, signal_handler)
 
 	parser = argparse.ArgumentParser(description='Software for working with remote SQL databases via the network')
 	parser.add_argument("-s", "--server", action="store_true", help='Start server')
