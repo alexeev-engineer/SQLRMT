@@ -30,7 +30,8 @@ class DBManager:
 		}
 		self.total_queries_count = 0
 
-	def set_pass(self, passphrase) -> list:
+	def set_pass(self, passphrase: str) -> list:
+		"""Set password for encyprtion database"""
 		try:
 			self.connection.execute(f"PRAGMA key = '{passphrase}'")
 		except Exception as e:
