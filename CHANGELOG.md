@@ -1,3 +1,15 @@
+commit 8de49101e117695795153ad31443d18d3c96fae7
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Mon Mar 18 23:11:10 2024 +0700
+
+    style/docs: update code comments
+
+commit f6e877aa9b8c01354763ef413fe1fa97e07d31ab
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Sun Mar 17 23:23:06 2024 +0700
+
+    update changelog
+
 commit f3cac5c0cf7f7511c8a48d7766b716bc4af0c41e
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Sun Mar 17 23:21:08 2024 +0700
