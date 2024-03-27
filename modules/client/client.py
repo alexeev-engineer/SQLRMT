@@ -10,7 +10,6 @@ import readline # !!! DON'T DELETE THIS IMPORT !!!
 import socket
 import ssl
 import asyncio
-from functools import cache
 
 from modules.logger import log
 
@@ -46,7 +45,6 @@ class Client:
 		self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
 		self.client.settimeout(self.timeout)
 
-	@cache
 	async def broadcast(self, socks):
 		"""Broadcast function: receives and sends messages.
 
@@ -58,7 +56,7 @@ class Client:
 		attempts = 0
 		while True:
 			if attempts > 2:
-				log('Verification passed. Successful connection to the database. Exit...', 'red')
+				log('Verification passed. Successful connection to the database. Exit...', 'exception')
 				socks.send(b'DISCONNECT')
 				exit()
 
@@ -73,7 +71,7 @@ class Client:
 					log('Verification passed. Successful connection to the database, welcome!', 'info')
 					break
 				else:
-					log('Verification failed. Please try another passphrase.', 'red')
+					log('Verification failed. Please try another passphrase.', 'error')
 
 		while True:
 			# receive and send messages
@@ -92,7 +90,7 @@ class Client:
 		connect <database> - connect to new database
 		info - info about connection
 
-	Currently connected to {self.host}:{self.port}''', 'none')
+Currently connected to {self.host}:{self.port}''', 'none')
 				elif message in ['disconnect', 'quit', 'exit']:
 					log('Disconnect from server...', 'debug')
 					try:
@@ -107,22 +105,21 @@ class Client:
 					if database:
 						socks.send(f'RECONNECT {database}'.encode())
 						receives = socks.recv(1024)
-						log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
+						log(f'{receives.decode()}', 'SERVER')
 				elif message == 'info':
 					socks.send(b'INFO')
 					receives = socks.recv(1024)
-					log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
+					log(f'{receives.decode()}', 'SERVER')
 				elif len(message) > 0:
 					socks.send(message.encode())
 					receives = socks.recv(1024)
-					log(f'[bold]{receives.decode()}[/bold]', 'SERVER')
+					log(f'{receives.decode()}', 'SERVER')
 			except ssl.SSLError as ex:
 				log(f"An error occurred on the client side while sending a request to the server: {ex}", 'error')
 
-	@cache
 	async def connect(self):
 		"""Connect to server."""
-		log(f'[blue]Connect to {self.host}:{self.port}[/blue]')
+		log(f'Connect to {self.host}:{self.port}')
 
 		# connect to server and start broadcast
 		try:
@@ -135,8 +132,8 @@ class Client:
 				task = asyncio.create_task(self.broadcast(socks))
 				await task
 		except TimeoutError:
-			log('The server is busy (timeout error). Connect later', 'red')
+			log('The server is busy (timeout error). Connect later', 'critical')
 			self.client.close()
 			exit()
 		except ConnectionRefusedError:
-			log('Check if you are connected to the network (if the server is not on local network) and if the server is turned on.', 'error')
+			log('Check if you are connected to the network (if the server is not on local network) and if the server is turned on.', 'critical')

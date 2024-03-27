@@ -112,7 +112,7 @@ class Server:
 				conn.send(f'Client: {addr}; {db_info}'.encode())
 				log(f'Client {addr} get info {db_info}', 'debug')
 			else:
-				log(f'{addr} says: [bold]{message}[/bold]', 'note')
+				log(f'{addr} says: {message}', 'note')
 			
 				try:
 					response = self.dbman.execute(message)

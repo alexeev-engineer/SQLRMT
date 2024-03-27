@@ -31,7 +31,10 @@ class DBManager:
 		self.total_queries_count = 0
 
 	def set_pass(self, passphrase: str) -> list:
-		"""Set password for encyprtion database"""
+		"""Set password for encyprtion database
+
+		Arguments:
+		 + passphrase: str - passphrase for database"""
 		try:
 			self.connection.execute(f"PRAGMA key = '{passphrase}'")
 		except Exception as e:
@@ -52,6 +55,7 @@ class DBManager:
 		self.cursor = self.connection.cursor()
 
 	def info_about_database(self) -> str:
+		"""Information about database and executed queries"""
 		return f'Database: {self.database_path}. Total queries sended: {self.total_queries_count}; success - {self.queries_count["success"]}; failed - {self.queries_count["failed"]}'
 
 	def execute(self, query: str) -> str:
