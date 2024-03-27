@@ -1,3 +1,9 @@
+commit 8fa1d224d31555afdd44fffb4ed4e661e736ea58
+Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
+Date:   Wed Mar 27 21:44:41 2024 +0700
+
+    feat/fix: fix bug and use paintlog for logging
+
 commit c16a5d55e7859c79b161cb1ed00f8aacb3bdb0a8
 Author: Alexeev Bronislav <bro.alexeev@inbox.ru>
 Date:   Tue Mar 19 18:18:18 2024 +0700

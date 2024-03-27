@@ -17,8 +17,10 @@
 
 SQLRMT is asynchronous, uses network traffic protection mechanisms and is extensible.
 
+This program uses my [python library paintlog](https://github.com/alexeev-engineer/paintlog) for beautiful logging.
+
 > [!CAUTION]
-> **SQLRMT currently only supports Linux distributions.** Other operating systems such as Windows, MacOS, BSD are not supported.
+> **SQLRMT currently only supports Linux® distributions.** Other operating systems such as Windows, MacOS, BSD are not supported.
 
 > [!CAUTION]
 > At the moment, SQLRMT is under active development, many things may not work, and this version is not recommended for use (all at your own risk).
